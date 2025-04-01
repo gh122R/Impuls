@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles/spectre/spectre.min.css">
+    <link rel="stylesheet" href="styles/spectre/spectre-exp.css">
+    <link rel="stylesheet" href="styles/spectre/spectre-icons.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="icon" sizes="16x16" href="/styles/icons/icon.svg">
+    <link rel="icon" sizes="32x32" href="/styles/icons/icon.svg">
+    <link rel="icon" sizes="96x96" href="/styles/icons/icon.svg">
+    <title><?= $pageTitle ?></title>
+</head>
+<body>
+<header class="navbar">
+    <section class="navbar-left">
+        <img style="position: absolute" src="/styles/icons/Impuls.svg" alt="Impuls-logo" title="Импульс">
+    </section>
+</header>
+<div class="form-container">
+    <div class="card">
+        <div class="card-header">
+            <p class="navbar-brand mr-2" title="Импульс"><?= $header ?></p>
+        </div>
+        <div class="card-body">
+            <form action="/register" method="post">
+                <div class="form-group">
+                    <input id="username" name="username" type="text" class="form-input" placeholder=" " required autocomplete="off">
+                    <label class="form-label" for="username">логин</label>
+                </div>
+                <br>
+                <div class="form-group">
+                    <input id="email" name="email"  class="form-input" placeholder=" " required autocomplete="off">
+                    <label class="form-label" for="email">почта</label>
+                </div>
+                <br>
+                <div class="form-group">
+                    <input  id="first_name" name="first_name" type="text" class="form-input" placeholder=" " required autocomplete="off">
+                    <label class="form-label" for="first_name">Имя</label>
+                </div>
+                <br>
+                <div class="form-group">
+                    <input id="surname" name="surname" type="text" class="form-input" placeholder=" " required autocomplete="off">
+                    <label class="form-label" for="surname">Фамилия</label>
+                </div>
+                <br>
+                <div class="form-group">
+                    <input id="password" name="password" type="password" class="form-input" placeholder=" " required autocomplete="off">
+                    <label class="form-label" for="password">пароль</label>
+                </div>
+                <br>
+                <button class="btn btn-block btn-standart" type="submit">зарегистрироваться</button>
+            </form>
+        </div>
+        <div class="card-footer">
+            <small>Уже зарегистрированы? | <a href="/login" title="Простая и быстрая">Авторизация</a></small>
+        </div>
+    </div>
+</div>
+</body>
+</html>

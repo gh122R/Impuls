@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/styles/spectre/spectre.min.css">
+    <link rel="stylesheet" href="/styles/spectre/spectre-exp.css">
+    <link rel="stylesheet" href="/styles/spectre/spectre-icons.css">
+    <link rel="stylesheet" href="/styles/admin/admin.css">
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="icon" sizes="16x16" href="/styles/icons/icon.svg">
+    <link rel="icon" sizes="32x32" href="/styles/icons/icon.svg">
+    <link rel="icon" sizes="96x96" href="/styles/icons/icon.svg">
+    <script src="/scripts/getAdminWorkAndCompletedComplaints.js" defer></script>
+    <script src="/scripts/adminGetProcessingComplaints.js" defer></script>
+    <title><?= $pageTitle ?></title>
+</head>
+<body>
+<header class="navbar">
+    <section class="navbar-left">
+        <a href="/"><img src="/styles/icons/Impuls.svg" alt="Impuls-logo" title="Импульс"></a>
+    </section>
+    <section class="navbar-section">
+        <div class="user-info">
+            <div class="user-card">
+                <img src="/styles/icons/user.svg" alt="User Avatar" class="user-avatar">
+                <div class="user-details">
+                    <h2><?= $_SESSION['username'] ?></h2>
+                </div>
+            </div>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <div class="dropdown-container">
+                    <ul>
+                        <li id="userProfileButton">Профиль</li>
+                        <li id="settingsButton">Настройки</li>
+                        <a style="text-decoration: none" href="/"><li id="home-link">Домашняя страница</li></a>
+                        <li class="exit-container">
+                            <form method="post" action="/logout">
+                                <button><img src="/styles/icons/logout.svg" alt="exit-icon" class="exit-icon"></button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="user-info">
+        </div>
+    </section>
+</header>
+<div class="profile">
+    <div class="profile-container">
+        <ul class="profile-container__user-info">
+            <li><span><?= $userInfo['first_name'] ?> </span><span><?= $userInfo['surname'] ?></span></li>
+            <li>Логин: <?= $userInfo['username'] ?></li>
+            <li>Почта: <?= $userInfo['email'] ?></li>
+            <li>Роль: <?= $userInfo['role'] ?></li>
+        </ul>
+    </div>
+</div>
+<div class="admin-container">
+    <div class="admin-sidebar">
+        <div class="admin-sidebar__header">
+        </div>
+        <div class="filters">
+            <img class="filter c-hand" src="/styles/icons/filter.svg" alt="filter">
+            <div class="dropdown-filters">
+                <div class="form-group">
+                    <label class="form-switch">
+                        <input id="ComplaintsInWork" type="checkbox">
+                        <i class="form-icon"></i><span class="switch-text">Обращения в работе</span>
+                    </label>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label class="form-switch">
+                        <input id="CompletedComplaints" type="checkbox">
+                        <i class="form-icon"></i><span class="switch-text">Завершённые обращения</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="complaint-list">
+
+        </div>
+    </div>
+    <div class="admin-main">
+        <div class="admin-main-container">
+
+        </div>
+        <div class="pagination-container" style="color: #fff ; display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1rem;"></div>
+    </div>
+</div>
+<script>
+    const userCard = document.querySelector(".user-card")
+    const dropdownMenu = document.querySelector(".dropdown-menu")
+    const overlay = document.createElement("div")
+    const userProfileButton = document.querySelector("#userProfileButton")
+    const userProfile = document.querySelector(".profile")
+    const complaintsFilter = document.querySelector(".filter")
+    const dropdownFilters = document.querySelector(".dropdown-filters")
+    overlay.classList.add("overlay")
+    document.body.appendChild(overlay)
+
+
+    complaintsFilter.addEventListener("click", () => {
+        dropdownFilters.classList.toggle("show")
+    })
+
+    userCard.addEventListener("click", (event) => {
+        event.stopPropagation()
+        dropdownMenu.classList.add("show")
+        overlay.classList.add("show")
+    })
+
+    userProfileButton.addEventListener("click", (event) => {
+        event.stopPropagation()
+        userProfile.classList.add("show")
+    })
+
+    dropdownMenu.addEventListener("click", () => {
+        userProfile.classList.remove("show")
+    })
+
+    overlay.addEventListener("click", () => {
+        if (userProfile.classList.contains("show")){
+            userProfile.classList.remove("show")
+        }
+        else if (dropdownMenu.classList.contains("show")){
+            dropdownMenu.classList.remove("show")
+            overlay.classList.remove("show")
+        }
+    })
+</script>
+</body>
+</html>

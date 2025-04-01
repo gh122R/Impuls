@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-signin-client_id" content="710434733614-9utmfi4hlp52ej9u1875akft9ep9vm05.apps.googleusercontent.com">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="stylesheet" href="/styles/spectre/spectre.min.css">
+    <link rel="stylesheet" href="/styles/spectre/spectre-exp.css">
+    <link rel="stylesheet" href="/styles/spectre/spectre-icons.css">
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="icon" sizes="16x16" href="/styles/icons/icon.svg">
+    <link rel="icon" sizes="32x32" href="/styles/icons/icon.svg">
+    <link rel="icon" sizes="96x96" href="/styles/icons/icon.svg">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <title><?= $pageTitle ?></title>
+</head>
+<body>
+<header class="navbar">
+    <section class="navbar-left">
+        <img style="position: absolute;" src="/styles/icons/Impuls.svg" alt="Impuls-logo" title="Импульс">
+    </section>
+</header>
+<div class="form-container">
+    <div class="video-container">
+        <video style="border-radius: 15px" controls autoplay muted>
+            <source type="video/mp4" src="/publicFiles/forest.mp4" >
+        </video>
+    </div>
+    <div class="form-wrapper">
+        <div class="card">
+            <div class="card-header">
+                <p><?= $header ?></p>
+            </div>
+            <div class="card-body">
+                <form action="/login" method="post">
+                    <div class="form-group">
+                        <input id="input-email" name="email" type="text" class="form-input" placeholder=" " required>
+                        <label class="form-label" for="input-email">Почта</label>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <input id="input-password" name="password" type="password" class="form-input" placeholder=" " required>
+                        <label class="form-label" for="input-password">Пароль</label>
+                    </div>
+                    <br>
+                    <button class="btn btn-block btn-standart" type="submit">Войти</button>
+                    <div class="card-footer">
+<!--                        <div class="google-login" style="display: flex; align-items: center; width: 40px;">
+                            <div id="g_id_onload"
+                                 data-client_id=""
+                                 data-context="signin"
+                                 data-ux_mode="popup"
+                                 data-callback="handleCredentialResponse"
+                                 data-auto_prompt="false">
+                            </div>
+                            <div class="g_id_signin" data-type="standard"></div>
+                        </div>-->
+                        <small>Нет аккаунта? | <a class="uri" href="/register">Регистрация</a></small>
+                    </div>
+                </form>
+            </div>
+        </div>
+<!--        <script>
+            handleCredentialResponse =  (response) =>{
+                let userGoogleAuthToken = response.credential
+                console.log(userGoogleAuthToken)
+                let  requestData = {
+                    token: userGoogleAuthToken
+                }
+                fetch('/google-auth',{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success){
+                            window.location.href = '/'
+                        }
+                    })
+                    .catch(error => console.error(error))
+            }
+        </script>-->
+    </div>
+</div>
+</body>
+</html>

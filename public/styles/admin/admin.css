@@ -1,0 +1,313 @@
+body{
+    background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+    min-height: 100vh;
+}
+
+.admin-container {
+    animation: fadeIn 1s ease-out;
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    padding: 0.7rem;
+}
+
+.admin-sidebar__header{
+    color: #fff;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.admin-sidebar {
+    flex: 1;
+    height: fit-content;
+    max-width: 45%;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+}
+
+.accordion{
+    color: #fff;
+}
+
+.admin-main {
+    flex: 2;
+    height: fit-content;
+    max-width: 45%;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+}
+
+.admin-main-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.filters {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.filters .btn {
+    flex: 1;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.filters .btn.active {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.filters .btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.complaint-list {
+    overflow-y: auto;
+}
+
+.tile-title{
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.switch-text{
+    margin-left: 40px;
+}
+
+.tile{
+    transition-duration: 0.2s;
+}
+
+.tile-content{
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 1rem;
+    padding: 1rem;
+    transition-duration: 0.2s;
+}
+
+.tile-content:hover {
+    box-shadow: 0 0 10px rgba(128, 128, 128, 0.7);
+}
+
+.tile-title {
+    color: white;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.tile-action {
+    margin-top: 1rem;
+    position: relative;
+}
+
+.close-complaint{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.56);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 320px;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out, visibility 0.2s ease-out;
+    z-index: 100;
+}
+
+.close-complaint.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.filters {
+    display: flex;
+    flex-direction: column;
+    height: 50px;
+}
+
+.filter{
+    width: 50px
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-switch {
+    display: flex;
+    align-items: center;
+}
+
+.form-switch input {
+    margin-right: 0.5rem;
+}
+
+.dropdown-filters {
+    visibility: hidden;
+    animation: fadeOut 0.2s ease-out;
+    transform: translate(10%,-180%) scale(1);
+    transition: opacity 0.2s ease-out;
+}
+
+.dropdown-filters.show {
+    animation: fadeIn 0.2s ease-out;
+    visibility: visible;
+}
+
+.form-switch{
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px !important;
+}
+.switch-text{
+    color: #fff;
+}
+
+.btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.filter-button:focus{
+    border: 1px solid rgba(255, 255, 255, 0.56);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.created_at{
+    position: absolute;
+    right: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 5px;
+    font-size: 0.6rem;
+}
+
+.delete-container{
+    display: flex;
+    justify-content: right;
+    padding: 10px;
+}
+
+.icon-delete{
+    font-size: 25px;
+}
+
+.accordion-body{
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 0 20px 0 20px;
+}
+
+.completed-accordion{
+    padding: 0 20px;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.hiddenAdminCompletedComplaint-form{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.37);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out, visibility 0.2s ease-out;
+    z-index: 100;
+}
+
+.hiddenAdminCompletedComplaint-form.show{
+    opacity: 1;
+    visibility: visible;
+}
+
+@media (max-width: 1150px){
+    .dropdown-filters{
+        transform: translate(15%,-180%) scale(1);
+    }
+}
+
+@media (max-width: 760px) {
+    .admin-container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .admin-main, .admin-sidebar {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 430px) {
+    .filters{
+        height: 30px;
+    }
+    .filter{
+        width: 35px
+    }
+    .dropdown-filters {
+        font-size: 15px;
+    }
+    .created_at{
+        position: relative;
+        text-align: center;
+        margin-bottom: 10px;
+        padding: 5px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        width: 200px;
+        font-size: 0.75rem;
+    }
+
+    .tile-content{
+        font-size: 0.75rem;
+    }
+    .tile-title {
+        font-size: 0.8rem;
+    }
+}

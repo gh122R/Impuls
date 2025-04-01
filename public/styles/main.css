@@ -1,0 +1,55 @@
+@import url("reset.css");
+@import url("fonts.css");
+@import url("variables.css");
+@import url("form-styles.css");
+@import url("complaintPage.css");
+@import url("dashboard.css");
+body {
+    background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+    min-height: 100vh;
+}
+
+.none{
+    display: none;
+}
+
+.loader {
+    width: 16px;
+    height: 16px;
+    display: block;
+    margin: 5px auto;
+    position: relative;
+    border: 1px solid #FFF;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: animloader 2s linear infinite;
+}
+.loader::after {
+    content: '';
+    box-sizing: border-box;
+    width: 2px;
+    height: 8px;
+    background: #FFF;
+    transform: rotate(-45deg);
+    position: absolute;
+    bottom: -6.6px;
+    left: 16px;
+}
+
+@keyframes animloader {
+    0% {
+        transform: translate(-10px, -5px);
+    }
+    25% {
+        transform: translate(-10px, 5px);
+    }
+    50% {
+        transform: translate(10px, 5px);
+    }
+    75% {
+        transform: translate(10px, -5px);
+    }
+    100% {
+        transform: translate(-10px, -5px);
+    }
+}

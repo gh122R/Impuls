@@ -1,0 +1,29 @@
+.table-container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-width: 50rem;
+    padding: 1.5rem;
+    margin: 50px auto;
+}
+
+.tr-tbody{
+    color: #fff;
+}
+
+.status {
+    font-weight: bold;
+}
+.status.pending {
+    color: orange;
+}
+.status.in-progress {
+    color: blue;
+}
+.status.completed {
+    color: green;
+}
+.card {
+    margin-bottom: 10px;
+}

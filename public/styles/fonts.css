@@ -1,0 +1,8 @@
+@font-face {
+    font-family: "Aboreto";
+    font-style: normal;
+    font-weight: 400;
+    src: url("/public/styles/fonts/Aboreto-Regular.ttf") format("ttf"),
+         url("/public/styles/fonts/Aboreto-Regular.woff2") format("woff2"),
+         url("/public/styles/fonts/Aboreto-Regular.woff2") format("woff");
+}

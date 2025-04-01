@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@tailwindcss/vite": "^4.0.14",
+    "gulp-cli": "^3.0.0",
+    "tailwindcss": "^4.0.14"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^5.0.0"
+  }
+}
