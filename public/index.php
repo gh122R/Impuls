@@ -14,6 +14,7 @@ $router->register('/', [App\Controllers\HomeController::class, 'create'], [AuthM
        ->register('/register', [App\Controllers\Auth\AuthController::class, 'register'])
        ->register('/logout', [App\Controllers\Auth\AuthController::class, 'logout'],  [AuthMiddleware::class])
        ->register('/getUserComplaints', [App\Controllers\HomeController::class, 'getComplaints'],  [AuthMiddleware::class])
+       ->register('/deleteComplaint', [App\Controllers\HomeController::class, 'deleteComplaint'],  [AuthMiddleware::class])
        ->register('/getUserCompletedComplaints', [App\Controllers\HomeController::class, 'getCompletedComplaints'],  [AuthMiddleware::class])
        ->register('/admin-panel', [App\Controllers\AdminController::class, 'index'],  [AuthMiddleware::class, [RoleMiddleware::class, 'admin']])
        ->register('/dashboard', [App\Controllers\DashboardController::class, 'index'],  [AuthMiddleware::class, [RoleMiddleware::class, 'admin']])

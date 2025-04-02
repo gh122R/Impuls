@@ -1,5 +1,5 @@
-let currentPage = 1;
-const pageItems = 3;
+let currentPage = 1
+const pageItems = 3
 
 fetchAdminProcessingComplaints = () => {
     fetch('/getAllProcessingComplaints', {
@@ -21,12 +21,12 @@ fetchAdminProcessingComplaints = () => {
 }
 
 const updateComplaintsList = (complaints) => {
-    const adminMain = document.querySelector(".admin-main-container");
-    adminMain.innerHTML = '';
+    const adminMain = document.querySelector(".admin-main-container")
+    adminMain.innerHTML = ''
 
     if (complaints.length === 0) {
-        adminMain.innerHTML = '<p style="color: #fff; text-align: center">Список обращений пуст</p><div class="loading loading-lg"></div>';
-        return;
+        adminMain.innerHTML = '<p style="color: #fff; text-align: center">Список обращений пуст</p><div class="loading loading-lg"></div>'
+        return
     }
 
     const startIndex = (currentPage - 1) * pageItems
@@ -34,9 +34,9 @@ const updateComplaintsList = (complaints) => {
     const paginationItems = complaints.slice(startIndex, endIndex)
 
     paginationItems.forEach(complaint => {
-        const complaintDetails = document.createElement("div");
-        complaintDetails.classList.add('complaint-details');
-        complaintDetails.id = `complaint-${complaint.id}`;
+        const complaintDetails = document.createElement("div")
+        complaintDetails.classList.add('complaint-details')
+        complaintDetails.id = `complaint-${complaint.id}`
         complaintDetails.innerHTML = `
             <div class="tile">
                 <div class="tile-content">
@@ -52,47 +52,47 @@ const updateComplaintsList = (complaints) => {
                 </div>
             </div>
         `;
-        adminMain.appendChild(complaintDetails);
+        adminMain.appendChild(complaintDetails)
     });
 };
 
 const updatePaginationControls = (totalItems) => {
-    const paginationContainer = document.querySelector(".pagination-container");
-    if (!paginationContainer) return;
+    const paginationContainer = document.querySelector(".pagination-container")
+    if (!paginationContainer) return
 
-    paginationContainer.innerHTML = '';
+    paginationContainer.innerHTML = ''
 
-    const totalPages = Math.ceil(totalItems / pageItems);
-    if (totalPages <= 1) return;
-    const prevButton = document.createElement("button");
-    prevButton.className = "btn btn-action";
-    prevButton.innerHTML = '<i class="icon icon-arrow-left"></i>';
-    prevButton.disabled = currentPage === 1;
+    const totalPages = Math.ceil(totalItems / pageItems)
+    if (totalPages <= 1) return
+    const prevButton = document.createElement("button")
+    prevButton.className = "btn btn-action"
+    prevButton.innerHTML = '<i class="icon icon-arrow-left"></i>'
+    prevButton.disabled = currentPage === 1
     prevButton.addEventListener('click', () => {
         if (currentPage > 1) {
-            currentPage--;
-            fetchAdminProcessingComplaints();
+            currentPage--
+            fetchAdminProcessingComplaints()
         }
-    });
+    })
 
-    const nextButton = document.createElement("button");
-    nextButton.className = "btn btn-action";
-    nextButton.innerHTML = '<i class="icon icon-arrow-right"></i>';
-    nextButton.disabled = currentPage === totalPages;
+    const nextButton = document.createElement("button")
+    nextButton.className = "btn btn-action"
+    nextButton.innerHTML = '<i class="icon icon-arrow-right"></i>'
+    nextButton.disabled = currentPage === totalPages
     nextButton.addEventListener('click', () => {
         if (currentPage < totalPages) {
-            currentPage++;
-            fetchAdminProcessingComplaints();
+            currentPage++
+            fetchAdminProcessingComplaints()
         }
-    });
+    })
 
-    const pageInfo = document.createElement("span");
-    pageInfo.className = "pagination-info";
-    pageInfo.textContent = `${currentPage} / ${totalPages}`;
-    paginationContainer.appendChild(prevButton);
-    paginationContainer.appendChild(pageInfo);
-    paginationContainer.appendChild(nextButton);
-};
+    const pageInfo = document.createElement("span")
+    pageInfo.className = "pagination-info"
+    pageInfo.textContent = `${currentPage} / ${totalPages}`
+    paginationContainer.appendChild(prevButton)
+    paginationContainer.appendChild(pageInfo)
+    paginationContainer.appendChild(nextButton)
+}
 
 const takeComplaint = async (complaintId) => {
     try {
@@ -109,16 +109,16 @@ const takeComplaint = async (complaintId) => {
             let adminMain = document.querySelector('.admin-main')
             let complaintId = adminMain.querySelector('.tile-title').textContent.match(/\d+/)[0];
             toast('toast-success', 'Вы взяли в работу обращение #' + complaintId + '!')
-            const complaintElement = document.querySelector(`#complaint-${complaintId}`);
+            const complaintElement = document.querySelector(`#complaint-${complaintId}`)
             startFetching(fetchAdminComplaintsInWork)
             if (complaintElement) {
-                complaintElement.remove();
+                complaintElement.remove()
             }
         } else {
-            alert('Ошибка при взятии обращения!');
+            alert('Ошибка при взятии обращения!')
         }
     } catch (error) {
-        console.error('Ошибка при взятии жалобы:', error);
+        console.error('Ошибка при взятии жалобы:', error)
     }
 }
 

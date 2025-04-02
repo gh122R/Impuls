@@ -229,16 +229,16 @@ updateAdminCompletedComplaintsList = (complaints, type) => {
                             </div>
                        </div>   ` : ` `}              
                        <div class="delete-container c-hand">
-                       <div class="delete-button">
-                            <button><i class="icon icon-delete"></i></button>
-                       </div>
-                       <form class="complaint-form hiddenAdminCompletedComplaint-form" action="/hiddenAdminCompletedComplaint" data-complaint-id="${complaint.id}">
-                       <div class="delete-description" style="text-align: center; margin-bottom: 20px">
-                           <p>Вы точно хотите удалить обращение #${complaint.id}?</p>
-                           <p>Оно удалится только у вас</p>
-                        </div>
-                        <button id="confirmButton" type="submit" class="btn btn-block btn-error">Да</button>
-                       </form>                      
+                           <div class="delete-button">
+                                <button><i class="icon icon-delete"></i></button>
+                           </div>
+                           <form class="complaint-form hiddenAdminCompletedComplaint-form" action="/hiddenAdminCompletedComplaint" data-complaint-id="${complaint.id}">
+                           <div class="delete-description" style="text-align: center; margin-bottom: 20px">
+                               <p>Вы точно хотите удалить обращение #${complaint.id}?</p>
+                               <p>Оно удалится только у вас</p>
+                            </div>
+                            <button id="confirmButton" type="submit" class="btn btn-block btn-error">Да</button>
+                           </form>                      
                     </div>                       
                 </div>  
             </div>

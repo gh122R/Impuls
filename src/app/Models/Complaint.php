@@ -333,4 +333,21 @@ class Complaint
             return false;
         }
     }
+
+    public function deleteComplaint(int $complaintId, int $userId) : bool
+    {
+        try {
+            $this->db->beginTransaction();
+            $stmt = $this->db->prepare("DELETE FROM complaints WHERE id = :complaint_id AND user_id = :user_id;");
+            $stmt->execute([
+                'complaint_id' => $complaintId,
+                'user_id' => $userId
+            ]);
+            $this->db->commit();
+            return true;
+        }catch (PDOException $e){
+            $this->db->rollBack();
+            return false;
+        }
+    }
 }

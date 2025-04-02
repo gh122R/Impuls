@@ -56,4 +56,22 @@ class HomeController
         echo json_encode(['completedComplaints' => $userCompletedComplaints]);
         exit();
     }
+
+    public function deleteComplaint()
+    {
+        if($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            $data = json_decode(file_get_contents("php://input"),true);
+            $complaintId = $data['complaintId'];
+            $userId = $_SESSION['user_id'];
+            if($complaintId)
+            {
+                $result = $this->Complaint->deleteComplaint($complaintId, $userId);
+                echo json_encode(['success' => $result,'id' => $complaintId]);
+                exit();
+            }
+            echo json_encode(['success' => false, 'id' => $complaintId]);
+            exit();
+        }
+    }
 }
