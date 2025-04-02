@@ -15,7 +15,7 @@
 ###
 
 <div align="center">
-  <video width="630" height="300" src="[https://user-images.githubusercontent.com/126239/151127893-5c98ba8d-c431-4a25-bb1f-e0b33645a2b6.mp4](https://github.com/user-attachments/assets/14ee28f8-2a0c-477f-8ac8-fd08be215d77)"></video>
+    <video width="630" height="300" src="https://github.com/user-attachments/assets/14ee28f8-2a0c-477f-8ac8-fd08be215d77"></video>
 </div>
 
 ###
