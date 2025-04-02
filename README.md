@@ -15,7 +15,7 @@
 ###
 
 <div align="center">
-  <img height="200" src="https://flic.kr/p/2qVvnTX"  />
+  <video height="200" src="https://flic.kr/p/2qVvnTX"  />
 </div>
 
 ###
