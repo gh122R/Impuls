@@ -12,12 +12,10 @@ services:
       - "XDG_CONFIG_HOME=/app"
     ports:
     - "8080:80"
-    links:
-      - php-fpm
-      - node
     depends_on:
       - php-fpm
       - node
+    network_mode: bridge
 
   php-fpm:
     build:
@@ -33,6 +31,7 @@ services:
     links:
       - mysql
       - node
+    network_mode: bridge
 
   php-cli:
     build:
