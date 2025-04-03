@@ -19,19 +19,40 @@ class User
             [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]
         );
     }
-    public function findUser(string $email)
+
+    public function getAllUsers(): array
     {
-        $stmt = $this->db->prepare("SELECT users.*, roles.role as role 
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM users");
+            $stmt->execute();
+            return $stmt->fetchAll();
+        }catch (PDOException $e)
+        {
+            return [];
+        }
+    }
+
+    public function findUserByEmail(string $email): ?array
+    {
+        try
+        {
+            $stmt = $this->db->prepare("SELECT users.*, roles.role as role 
                                     FROM users 
                                     LEFT JOIN roles ON users.role_id = roles.id 
                                     WHERE users.email = :email");
-        $stmt->execute(['email' => $email]);
-        return $stmt->fetch();
+            $stmt->execute(['email' => $email]);
+            return $stmt->fetch();
+        }catch (PDOException $e)
+        {
+            return [];
+        }
     }
 
     public function findUserById(int $id): ?array
     {
-        $stmt = $this->db->prepare("
+        try
+        {
+            $stmt = $this->db->prepare("
                                     SELECT 
                                     users.id, 
                                     users.username, 
@@ -43,25 +64,19 @@ class User
                                     FROM users 
                                     LEFT JOIN roles ON users.role_id = roles.id 
                                     WHERE users.id = :id");
-        $stmt->execute(['id' => $id]);
-        return $stmt->fetch();
-    }
-    public function setRole(int $userId, int $roleId): bool
-    {
-        try {
-            $stmt = $this->db->prepare("UPDATE users SET role_id = :role_id WHERE id = :user_id");
-            return $stmt->execute([
-                'role_id' => $roleId,
-                'user_id' => $userId,
-            ]);
-        } catch (PDOException $e) {
-            return false;
+            $stmt->execute(['id' => $id]);
+            return $stmt->fetch();
+        }catch (PDOException $e)
+        {
+            return [];
         }
     }
+
     public function createUser(string $username, string $firstName, string $surname, string $email, string $user_password)
     {
         $passwordHash = password_hash($user_password, PASSWORD_DEFAULT);
-        try {
+        try
+        {
             $this->db->beginTransaction();
             $stmt = $this->db->prepare(
                 "INSERT INTO users (username, first_name, surname, email, user_password, is_active, created_at, rating, role_id)
@@ -76,18 +91,66 @@ class User
             ]);
             $this->db->commit();
             return true;
+        } catch (PDOException $e)
+        {
+            $this->db->rollBack();
+            return false;
+        }
+    }
+
+    public function deleteUser(int $userId, string $role, string $password)
+    {
+        try
+        {
+            $user = $this->findUserById($userId);
+            if (!$user)
+            {
+                return false;
+            }
+            if ($role === 'moderator' || password_verify($password, $user['user_password']))
+            {
+                $this->db->beginTransaction();
+                $stmt = $this->db->prepare("DELETE FROM users WHERE id = :user_id");
+                $stmt->execute(['user_id' => $userId]);
+                $this->db->commit();
+                return true;
+            }
+        }catch (PDOException $e)
+        {
+            $this->db->rollBack();
+            return false;
+        }
+    }
+
+    public function setRole(int $userId, int $roleId): bool
+    {
+        try
+        {
+            $this->db->beginTransaction();
+            $stmt = $this->db->prepare("UPDATE users SET role_id = :role_id WHERE id = :user_id");
+            $stmt->execute([
+                'role_id' => $roleId,
+                'user_id' => $userId,
+            ]);
+            $this->db->commit();
+            return true;
         } catch (PDOException $e) {
             $this->db->rollBack();
             return false;
         }
     }
 
-    public function getRole(int $userId): ?string
+    public function getRole(int $userId): string
     {
-        $stmt = $this->db->prepare("SELECT r.role FROM roles r 
+        try {
+            $stmt = $this->db->prepare("SELECT r.role FROM roles r 
                                     JOIN users u ON u.role_id = r.id
                                     WHERE u.id = :user_id");
-        $stmt->execute(['user_id' => $userId]);
-        return $stmt->fetchColumn() ?: null;
+            $stmt->execute(['user_id' => $userId]);
+            return $stmt->fetchColumn();
+        }catch (PDOException $e)
+        {
+            return '';
+        }
     }
 }

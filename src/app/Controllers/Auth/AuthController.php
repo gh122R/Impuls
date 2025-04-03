@@ -36,7 +36,7 @@ class AuthController
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
             $userModel = new User();
-            $user = $userModel->findUser($email);
+            $user = $userModel->findUserByEmail($email);
             if ($user and password_verify($password, $user['user_password']))
             {
                 $role = $userModel->getRole($user['id']);
@@ -71,7 +71,7 @@ class AuthController
             echo json_encode(['success' => false]);
             exit;
         }
-        $client = new \Google_Client(['client_id' => '710434733614-9utmfi4hlp52ej9u1875akft9ep9vm05.apps.googleusercontent.com']);
+        $client = new \Google_Client(['client_id' => '']);
         $clientResponse = $client->verifyIdToken($googleToken);
         if (!$clientResponse)
         {
@@ -81,13 +81,13 @@ class AuthController
         if ($clientResponse) {
             $email = $clientResponse['email'];
             $userModel = new User();
-            $user = $userModel->findUser($email);
+            $user = $userModel->findUserByEmail($email);
             if(!$user){
                 $username = explode('@', $email)[0];
                 $userPass = bin2hex(random_bytes(16));
                 $userModel ->createUser($username, $clientResponse['given_name'], $clientResponse['family_name'],
                     $clientResponse['email'], $userPass );
-                $user = $userModel->findUser($email);
+                $user = $userModel->findUserByEmail($email);
             }
         }
         $role = $userModel->getRole($user['id']);
@@ -120,7 +120,7 @@ class AuthController
             $userModel = new User();
             if ($userModel->createUser($username, $firstName, $surname, $email, $password))
             {
-                $user = $userModel->findUser($email);
+                $user = $userModel->findUserByEmail($email);
                 $issuedAt = time();
                 $expirationTime = $issuedAt + 3600*60*60*24*30;
                 $payload = [

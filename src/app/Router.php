@@ -2,7 +2,7 @@
 
 namespace App;
 
-/*use App\Controllers\DashboardController;
+/*use App\Controllers\ModeratorController;
 use App\Exceptions\RouteNotFoundException;*/
 use App\View\View;
 
