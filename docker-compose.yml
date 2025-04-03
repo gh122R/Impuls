@@ -16,6 +16,8 @@ services:
       - php-fpm
       - node
     network_mode: bridge
+    extra_hosts:
+      - "php-fpm:host-gateway"
 
   php-fpm:
     build:
