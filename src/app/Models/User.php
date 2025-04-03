@@ -98,7 +98,7 @@ class User
         }
     }
 
-    public function deleteUser(int $userId, string $role, string $password)
+    public function deleteUser(int $userId, string $role, string $password): bool
     {
         try
         {
@@ -114,6 +114,9 @@ class User
                 $stmt->execute(['user_id' => $userId]);
                 $this->db->commit();
                 return true;
+            }else
+            {
+                return false;
             }
         }catch (PDOException $e)
         {

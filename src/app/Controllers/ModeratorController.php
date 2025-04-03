@@ -43,14 +43,14 @@ class ModeratorController
         {
             $data = json_decode(file_get_contents('php://input'), true);
             $userId = $data['userId'];
-            $role = $this->User->getRole($_SESSION['userId']);
+            $role = $this->User->getRole($_SESSION['user_id']);
             if($userId)
             {
-                $this->User->deleteUser($userId, $role, 'none');
+                $this->User->deleteUser($userId, $role, $data['password']);
                 echo json_encode(['success' => true]);
                 exit();
             }
-            echo json_encode(['success' => false]);
+            echo json_encode(['success' => false, 'id' => $userId]);
             exit();
         }
     }
