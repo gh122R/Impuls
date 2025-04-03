@@ -15,6 +15,9 @@ services:
     links:
       - php-fpm
       - node
+    depends_on:
+      - php-fpm
+      - node
 
   php-fpm:
     build:
