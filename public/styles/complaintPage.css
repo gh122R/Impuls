@@ -10,7 +10,7 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     max-width: 25rem;
-    padding: 1.5rem;
+    padding: 1rem;
 }
 
 .tile-content{
@@ -341,12 +341,11 @@
 }
 
 .tile-header{
-    display: flex;
-    color: #fff;
-    justify-content: center;
+    text-align: center;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    flex-wrap: nowrap;
 }
 
 .tile-title{
