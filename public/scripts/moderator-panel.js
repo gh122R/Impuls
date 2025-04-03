@@ -9,11 +9,21 @@ function UserInteraction(){
             .then(response => response.json())
             .then(data => {
                 if (data.users){
+                    updateAllUsers(data.users)
                     console.log(data.users)
                 }
             }).catch(error => {
                 console.log(error)
         })
+
+        function updateAllUsers(users){
+            const usersAccordion = document.querySelector(".users-accordion")
+            users.length === 0 ? usersAccordion.innerHTML = '' : users.forEach(user => {
+                let id = document.createElement("div")
+                id.innerHTML = user.id
+                usersAccordion.append(id)
+            })
+        }
     }
 
    async function deleteUser(){
@@ -57,5 +67,7 @@ function UserInteraction(){
             console.log(error)
         }
     }
+    getAllUsers()
 }
 
+UserInteraction()

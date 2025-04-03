@@ -1,14 +1,146 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/spectre/spectre.min.css">
+    <link rel="stylesheet" href="styles/spectre/spectre-exp.css">
+    <link rel="stylesheet" href="styles/spectre/spectre-icons.css">
+    <link rel="stylesheet" href="styles/main.css">
     <script src="/scripts/moderator-panel.js" defer></script>
-    <title><?= $pageTitle ?></title>
+    <title>Админ-панель</title>
+    <style>
+        .container {
+            margin-top: 100px;
+            padding: 20px;
+            max-width: 1200px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .btn {
+            border-radius: 8px;
+            font-size: 16px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .btn:hover {
+            opacity: 0.8;
+        }
+        .btn-error {
+            background: #dc3545;
+            color: white;
+        }
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            border-radius: 15px;
+        }
+        .admin-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 15px;
+            border-radius: 15px;
+            background: #343a40;
+            color: white;
+            margin-top: 30px;
+        }
+
+    </style>
 </head>
 <body>
-123
+<header class="navbar">
+    <section class="navbar-left">
+        <img src="/styles/icons/Impuls.svg" alt="Impuls-logo" title="Импульс">
+    </section>
+    <section class="navbar-section">
+        <div class="user-info">
+            <div class="user-card">
+                <img src="/styles/icons/user.svg" alt="User Avatar" class="user-avatar">
+                <div class="user-details">
+                    <h2><?= $_SESSION['username'] ?></h2>
+                </div>
+            </div>
+        </div>
+    </section>
+</header>
+<main class="container grid-lg">
+    <div class="panel">
+        <div class="card">
+            <div class="card-header"><strong>Обращения сотрудников:</strong> <span id="complaint-count">0</span></div>
+            <div class="accordion">
+                <input type="checkbox" id="accordion-1" name="accordion-checkbox" hidden>
+                <label class="accordion-header" for="accordion-1">
+                    <i class="icon icon-arrow-right mr-1"></i>
+                    Открыть
+                </label>
+                <div class="accordion-body">
+                    <div class="card-body" id="complaint-list">Загрузка...</div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header"><strong>Пользователи:</strong> <span id="user-count">0</span></div>
+            <div class="accordion">
+                <input type="checkbox" id="accordion-2" name="accordion-checkbox" hidden>
+                <label class="accordion-header" for="accordion-2">
+                    <i class="icon icon-arrow-right mr-1"></i>
+                    Открыть
+                </label>
+                <div class="accordion-body users-accordion">
+                    <div class="card-body" id="user-list">Загрузка...</div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header"><strong>Администраторы:</strong> <span id="admin-count">0</span></div>
+            <div class="accordion">
+                <input type="checkbox" id="accordion-3" name="accordion-checkbox" hidden>
+                <label class="accordion-header" for="accordion-3">
+                    <i class="icon icon-arrow-right mr-1"></i>
+                    Открыть
+                </label>
+                <div class="accordion-body">
+                    <div class="card-body" id="admin-list">
+                        <div class="admin-card">
+                            <div class="admin-card__header">
+                                <span>Админ 1</span>
+                            </div>
+                            <div class="admin-card__body">
+                                <button class="btn btn-error">Удалить</button>
+                                <button class="btn btn-primary">Изменить роль</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; ИМПУЛЬС | 2024 Панель модератора</p>
+</footer>
 </body>
 </html>
