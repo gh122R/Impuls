@@ -1,5 +1,4 @@
 version: '3.2'
-
 services:
   nginx:
     build:
@@ -13,13 +12,9 @@ services:
       - "XDG_CONFIG_HOME=/app"
     ports:
       - "8080:80"
-    depends_on:
+    links:
       - php-fpm
       - node
-    networks:
-      - app_network
-    extra_hosts:
-      - "php-fpm:host-gateway"
 
   php-fpm:
     build:
@@ -32,8 +27,9 @@ services:
       - "DB_HOST=mysql"
       - "REDIS_PORT=6379"
       - "REDIS_HOST=redis"
-    networks:
-      - app_network
+    links:
+      - mysql
+      - node
 
   php-cli:
     build:
@@ -45,8 +41,8 @@ services:
       - "DB_PORT=3306"
       - "DB_HOST=mysql"
       - "COMPOSER_MEMORY_LIMIT=-1"
-    networks:
-      - app_network
+    links:
+      - mysql
     tty: true
 
   mysql:
@@ -60,9 +56,6 @@ services:
       - "MYSQL_DATABASE=my_db"
     ports:
       - "33061:3306"
-    networks:
-      - app_network
-
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -74,9 +67,6 @@ services:
     restart: always
     ports:
       - 8081:80
-    networks:
-      - app_network
-
   node:
     image: node:20-alpine
     ports:
@@ -86,12 +76,6 @@ services:
     working_dir: /var/www
     command: sh -c "yarn install && yarn dev"
     tty: true
-    networks:
-      - app_network
-
-networks:
-  app_network:
-    driver: bridge
 
 volumes:
   database:
