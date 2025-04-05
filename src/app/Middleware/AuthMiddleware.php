@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Middleware;
+use App\Models\User;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -28,6 +29,16 @@ class AuthMiddleware
             $decoded = JWT::decode($jwt, $key);
             $_SESSION['user_id'] = $decoded->user_id;
             $_SESSION['username'] = $decoded->username;
+            $user = new User();
+            if (!$user -> findUserById($_SESSION['user_id']))
+            {
+                $_SESSION = [];
+                session_destroy();
+                setcookie('token', '', time() - 3600, '/');
+                unset($_COOKIE['token']);
+                header('Location: /login');
+                exit;
+            }
         }catch (ExpiredException $e){
             header('Location: /login');
             exit;

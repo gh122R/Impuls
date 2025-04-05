@@ -32,7 +32,7 @@ class User
         }
     }
 
-    public function findUserByEmail(string $email): ?array
+    public function findUserByEmail(string $email)
     {
         try
         {
@@ -48,7 +48,7 @@ class User
         }
     }
 
-    public function findUserById(int $id): ?array
+    public function findUserById(int $id)
     {
         try
         {

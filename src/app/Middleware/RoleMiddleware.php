@@ -7,10 +7,13 @@ use App\Models\User;
 
 class RoleMiddleware
 {
-    private $role;
-    public function __construct($role)
+    private array $receivedRoles;
+    public function __construct(string | array $roles)
     {
-        $this->role = $role ;
+        if (is_string($roles)) {
+            $roles = preg_split('/\s*\|\|\s*/', $roles);
+        }
+        $this->receivedRoles = $roles ;
     }
 
     public function handle(callable $next)
@@ -19,7 +22,7 @@ class RoleMiddleware
         $role = $user->getRole($_SESSION['user_id']);
         $authMiddleware = new AuthMiddleware();
         $authMiddleware->handle(function() use ($next, $role) {
-            if ($role !== $this->role) {
+            if (!in_array($role, $this->receivedRoles)) {
                 header('Location: /');
                 exit;
             }

@@ -37,6 +37,10 @@ class AuthController
             $password = $_POST['password'] ?? '';
             $userModel = new User();
             $user = $userModel->findUserByEmail($email);
+            if (!$user)
+            {
+                return view::render('auth/login', ['error' => $error, 'pageTitle' => $data['pageTitle'], 'header' => $data['header']]);
+            }
             if ($user and password_verify($password, $user['user_password']))
             {
                 $role = $userModel->getRole($user['id']);

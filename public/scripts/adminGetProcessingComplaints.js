@@ -1,6 +1,7 @@
 let currentPage = 1
 const pageItems = 3
 
+
 fetchAdminProcessingComplaints = () => {
     fetch('/getAllProcessingComplaints', {
         method: 'GET',
@@ -129,6 +130,8 @@ document.addEventListener('click', (event) => {
         takeComplaint(complaintId);
     }
 })
+
+
 
 setInterval(fetchAdminProcessingComplaints, 2000)
 fetchAdminProcessingComplaints()
