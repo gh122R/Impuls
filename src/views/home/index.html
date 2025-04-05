@@ -34,8 +34,11 @@
                     <ul>
                         <li id="userProfileButton">Профиль</li>
                         <li id="settingsButton">Настройки</li>
-                        <?php if($userInfo['role'] === 'admin'): ?>
-                        <a style="text-decoration: none" href="/admin-panel"><li id="dashboard-link">Админ-панель</li></a>
+                        <?php if($userInfo['role'] === 'admin' || 'moderator'): ?>
+                        <a style="text-decoration: none" href="/admin-panel"><li>Админ-панель</li></a>
+                        <?php endif ?>
+                        <?php if($userInfo['role'] === 'moderator'): ?>
+                        <a style="text-decoration: none" href="/moderator-panel"><li>Страница управления</li></a>
                         <?php endif ?>
                         <li class="exit-container">
                             <form method="post" action="/logout">
