@@ -3,9 +3,16 @@
 session_start();
 require_once '../vendor/autoload.php';
 
+header("Cross-Origin-Opener-Policy: same-origin-allow-popups");
+header("Cross-Origin-Embedder-Policy: credentialless");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
 use App\Middleware\AuthMiddleware;
 use App\Middleware\RoleMiddleware;
 use App\Router;
+
 $router = new Router();
 
 $router->register('/', [App\Controllers\HomeController::class, 'create'], [AuthMiddleware::class])

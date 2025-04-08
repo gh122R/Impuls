@@ -36,6 +36,9 @@
                         <li id="userProfileButton">Профиль</li>
                         <li id="settingsButton">Настройки</li>
                         <a style="text-decoration: none" href="/"><li id="home-link">Домашняя страница</li></a>
+                        <?php if($userInfo['role'] === 'moderator'): ?>
+                        <a style="text-decoration: none" href="/moderator-panel"><li id="moder-link">Страница управления</li></a>
+                        <?php endif ?>
                         <li class="exit-container">
                             <form method="post" action="/logout">
                                 <button><img src="/styles/icons/logout.svg" alt="exit-icon" class="exit-icon"></button>

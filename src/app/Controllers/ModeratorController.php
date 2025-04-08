@@ -16,9 +16,10 @@ class ModeratorController
         $this->User = new User();
     }
     public function index()
-    {
+    {   $userInfo = $this->User->findUserById($_SESSION['user_id']);
         $data = [
             'pageTitle' => 'Управление',
+            'userInfo' => $userInfo
         ];
         return View::render('/moderator-panel/index', $data);
     }

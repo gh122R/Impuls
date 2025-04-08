@@ -3,71 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/spectre/spectre.min.css">
-    <link rel="stylesheet" href="styles/spectre/spectre-exp.css">
-    <link rel="stylesheet" href="styles/spectre/spectre-icons.css">
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="/styles/spectre/spectre.min.css">
+    <link rel="stylesheet" href="/styles/spectre/spectre-exp.css">
+    <link rel="stylesheet" href="/styles/spectre/spectre-icons.css">
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/moderator/moderator-panel.css">
     <script src="/scripts/moderator-panel.js" defer></script>
     <title>Админ-панель</title>
-    <style>
-        .container {
-            margin-top: 100px;
-            padding: 20px;
-            max-width: 1200px;
-        }
-        .card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        .btn {
-            border-radius: 8px;
-            font-size: 16px;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-        .btn:hover {
-            opacity: 0.8;
-        }
-        .btn-error {
-            background: #dc3545;
-            color: white;
-        }
-        .btn-primary {
-            background: #007bff;
-            color: white;
-        }
-
-        .panel {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            border-radius: 15px;
-        }
-        .admin-card {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-        footer {
-            text-align: center;
-            padding: 10px;
-            font-size: 15px;
-            border-radius: 15px;
-            background: #343a40;
-            color: white;
-            margin-top: 30px;
-        }
-
-    </style>
 </head>
 <body>
 <header class="navbar">
@@ -82,9 +24,35 @@
                     <h2><?= $_SESSION['username'] ?></h2>
                 </div>
             </div>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <div class="dropdown-container">
+                    <ul>
+                        <li id="userProfileButton">Профиль</li>
+                        <li id="settingsButton">Настройки</li>
+                        <?php if($userInfo['role'] === 'admin' || 'moderator'): ?>
+                        <a style="text-decoration: none" href="/admin-panel"><li>Админ-панель</li></a>
+                        <?php endif ?>
+                        <li class="exit-container">
+                            <form method="post" action="/logout">
+                                <button><img src="/styles/icons/logout.svg" alt="exit-icon" class="exit-icon"></button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </section>
 </header>
+<div class="profile">
+    <div class="profile-container">
+        <ul class="profile-container__user-info">
+            <li><span><?= $userInfo['first_name'] ?> </span><span><?= $userInfo['surname'] ?></span></li>
+            <li>Логин: <?= $userInfo['username'] ?></li>
+            <li>Почта: <?= $userInfo['email'] ?></li>
+            <li>Роль: <?= $userInfo['role'] ?></li>
+        </ul>
+    </div>
+</div>
 <main class="container grid-lg">
     <div class="panel">
         <div class="card">
@@ -109,7 +77,6 @@
                     Открыть
                 </label>
                 <div class="accordion-body users-accordion">
-                    <div class="card-body" id="user-list">Загрузка...</div>
                 </div>
             </div>
         </div>
@@ -138,9 +105,43 @@
         </div>
     </div>
 </main>
-
 <footer>
     <p>&copy; ИМПУЛЬС | 2024 Панель модератора</p>
 </footer>
+<script>
+    const userCard = document.querySelector(".user-card")
+    const dropdownMenu = document.querySelector(".dropdown-menu")
+    const overlay = document.createElement("div")
+    const userProfileButton = document.querySelector("#userProfileButton")
+    const userProfile = document.querySelector(".profile")
+
+    overlay.classList.add("overlay")
+    document.body.appendChild(overlay)
+
+    userCard.addEventListener("click", (event) => {
+        event.stopPropagation()
+        dropdownMenu.classList.add("show")
+        overlay.classList.add("show")
+    })
+
+    userProfileButton.addEventListener("click", (event) => {
+        event.stopPropagation()
+        userProfile.classList.add("show")
+    })
+
+    dropdownMenu.addEventListener("click", () => {
+        userProfile.classList.remove("show")
+    })
+
+    overlay.addEventListener("click", () => {
+        if (userProfile.classList.contains("show")){
+            userProfile.classList.remove("show")
+        }
+        else if (dropdownMenu.classList.contains("show")){
+            dropdownMenu.classList.remove("show")
+            overlay.classList.remove("show")
+        }
+    })
+</script>
 </body>
 </html>

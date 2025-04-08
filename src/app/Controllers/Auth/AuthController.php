@@ -20,11 +20,6 @@ class AuthController
 
     public function login() : string
     {
-        header("Cross-Origin-Opener-Policy: same-origin-allow-popups");
-        header("Cross-Origin-Embedder-Policy: credentialless");
-        header("Access-Control-Allow-Origin: *");
-        header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-        header("Access-Control-Allow-Headers: Content-Type, Authorization");
         $error = 'Неверные учётные данные!';
         $data = [
           'pageTitle' => 'Авторизация',

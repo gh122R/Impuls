@@ -1,0 +1,77 @@
+.container {
+    margin-top: 100px;
+    padding: 20px;
+    max-width: 1200px;
+}
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-header{
+    color: #fff;
+}
+
+.about-user{
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 5px;
+}
+
+.accordion{
+    color: #fff;
+}
+
+.btn {
+    border-radius: 8px;
+    font-size: 16px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+.btn-error {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-primary {
+    background: #007bff;
+    color: white;
+}
+
+.panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.admin-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 15px;
+    background: #343a40;
+    color: white;
+    margin-top: 30px;
+}

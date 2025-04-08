@@ -5,7 +5,6 @@ use PDO;
 use PDOException;
 use Dotenv\Dotenv;
 use stdClass;
-
 class User
 {
     private Dotenv $dotenv;
