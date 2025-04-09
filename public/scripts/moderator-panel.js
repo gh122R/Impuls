@@ -119,7 +119,8 @@ class complaintInteraction{
 
     updateComplaints(complaints) {
         const usersAccordion = document.querySelector(".complaints-accordion")
-        complaints.length === 0 ? usersAccordion.innerHTML = 'Обращений нет.' : complaints.forEach(complaint => {
+        complaints.length !== 0 ? document.querySelector("#complaint-count").innerHTML = complaints.length : 0
+            complaints.length === 0 ? usersAccordion.innerHTML = 'Обращений нет.' : complaints.forEach(complaint => {
             let id = document.createElement("span").innerHTML = complaint.id + 1
             let fullName = document.createElement("span").innerHTML = complaint.first_name +  ` ` + complaint.surname
             let aboutComplaint = document.createElement("div")
