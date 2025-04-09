@@ -20,7 +20,7 @@ class HomeController
         $problemCategories = $this->Complaint->getProblemCategories();
         $userInfo = $this->User->findUserById($_SESSION['user_id']);
         if ($_SERVER['REQUEST_METHOD'] == 'POST' &&  isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
-            $description = $_POST['description'] ?? '';
+            $description = htmlspecialchars($_POST['description']) ?? '';
             $departmentId = $_POST['departmentId'] ?? null;
             $problemCategoryId = $_POST['problemCategoryId'] ?? null;
             if (!empty($description) && !empty($departmentId) && !empty($problemCategoryId)) {

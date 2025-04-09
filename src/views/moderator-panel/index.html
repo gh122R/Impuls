@@ -54,7 +54,7 @@
     </div>
 </div>
 <main class="container grid-lg">
-    <div class="panel">
+    <div class="panel-container">
         <div class="card">
             <div class="card-header"><strong>Обращения сотрудников:</strong> <span id="complaint-count">0</span></div>
             <div class="accordion">
@@ -63,8 +63,7 @@
                     <i class="icon icon-arrow-right mr-1"></i>
                     Открыть
                 </label>
-                <div class="accordion-body">
-                    <div class="card-body" id="complaint-list">Загрузка...</div>
+                <div class="accordion-body complaints-accordion">
                 </div>
             </div>
         </div>
@@ -80,34 +79,8 @@
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-header"><strong>Администраторы:</strong> <span id="admin-count">0</span></div>
-            <div class="accordion">
-                <input type="checkbox" id="accordion-3" name="accordion-checkbox" hidden>
-                <label class="accordion-header" for="accordion-3">
-                    <i class="icon icon-arrow-right mr-1"></i>
-                    Открыть
-                </label>
-                <div class="accordion-body">
-                    <div class="card-body" id="admin-list">
-                        <div class="admin-card">
-                            <div class="admin-card__header">
-                                <span>Админ 1</span>
-                            </div>
-                            <div class="admin-card__body">
-                                <button class="btn btn-error">Удалить</button>
-                                <button class="btn btn-primary">Изменить роль</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </main>
-<footer>
-    <p>&copy; ИМПУЛЬС | 2024 Панель модератора</p>
-</footer>
 <script>
     const userCard = document.querySelector(".user-card")
     const dropdownMenu = document.querySelector(".dropdown-menu")

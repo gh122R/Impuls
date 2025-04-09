@@ -11,13 +11,9 @@ class Router
     private array $routes;
     public function register(string $route, callable|array $action, array $middleware = []): self
     {
-        /*Мне лень это делать*/
-/*        $dinamicRoute = preg_replace('/\{(\w+)\}/', '(?P<$1>[^\/]+)', $route);
-        $dinamicRoute = "#^" . $dinamicRoute . "$#";*/
         $this->routes[$route] = [
             'action' => $action,
             'middleware' => $middleware,
-      /*      'dinamicRoutetern' => $dinamicRoute,*/
         ];
         return $this;
     }

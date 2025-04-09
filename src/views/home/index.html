@@ -5,9 +5,9 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="styles/spectre/spectre.min.css">
-    <link rel="stylesheet" href="styles/spectre/spectre-exp.css">
-    <link rel="stylesheet" href="styles/spectre/spectre-icons.css">
+    <link rel="stylesheet" href="/styles/spectre/spectre.min.css">
+    <link rel="stylesheet" href="/styles/spectre/spectre-exp.css">
+    <link rel="stylesheet" href="/styles/spectre/spectre-icons.css">
     <link rel="stylesheet" href="/styles/main.css">
     <script src="/scripts/homeSentComplaint.js" defer></script>
     <script src="/scripts/homeGetComplaints.js" defer></script>
@@ -34,7 +34,7 @@
                     <ul>
                         <li id="userProfileButton">Профиль</li>
                         <li id="settingsButton">Настройки</li>
-                        <?php if($userInfo['role'] === 'admin' || 'moderator'): ?>
+                        <?php if($userInfo['role'] === 'admin' || $userInfo['role'] === 'moderator'): ?>
                         <a style="text-decoration: none" href="/admin-panel"><li>Админ-панель</li></a>
                         <?php endif ?>
                         <?php if($userInfo['role'] === 'moderator'): ?>
