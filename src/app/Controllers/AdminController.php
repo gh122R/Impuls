@@ -79,7 +79,7 @@ class AdminController
         {
             $data = json_decode(file_get_contents("php://input"),true);
             $complaintId = $data['complaintId'];
-            $comment = htmlspecialchars($data['comment']);
+            $comment = $data['comment'];
             if($complaintId)
             {
                 $result = $this->Complaint->adminCompleteComplaint($complaintId, $comment);

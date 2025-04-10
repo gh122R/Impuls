@@ -13,9 +13,6 @@
     height: fit-content;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-}
 
 .card-header{
     color: #fff;
@@ -86,6 +83,13 @@
 .btn-primary {
     background: #007bff;
     color: white;
+}
+
+.userInteraction-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 10px;
 }
 
 .panel-container {

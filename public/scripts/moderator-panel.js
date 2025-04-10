@@ -23,7 +23,8 @@ class userInteraction{
 
      updateAllUsers(users){
         const usersAccordion = document.querySelector(".users-accordion")
-        users.length === 0 ? usersAccordion.innerHTML = 'Пользователей нет. Как это возможно 0_0?' : users.forEach(user => {
+         document.querySelector("#user-count").innerHTML = users.length
+        users.length === 0 ? usersAccordion.innerHTML = 'Пользователей нет. Как это возможно 0_0?' :  users.forEach(user => {
             let id = document.createElement("span").innerHTML = user.id
             let fullName = document.createElement("span").innerHTML = user.first_name +  ` ` + user.surname
             let username = document.createElement("span").innerHTML = user.username
@@ -34,7 +35,8 @@ class userInteraction{
                       <input type="checkbox" id="accordion-${id}" name="accordion-checkbox" hidden>
                       <label class="accordion-header" for="accordion-${id}">
                         <i class="icon icon-arrow-right mr-1"></i>
-                        ${fullName}
+                        ${fullName} <div class="userInteraction-container" ><button class="btn btn-standart">Изменить роль</button>
+                        <button class="btn btn-error delete-button">Удалить</button></div>
                       </label>
                       <div class="accordion-body">
                          <p>Логин: ${username}</p>
@@ -42,14 +44,32 @@ class userInteraction{
                          <p>Имя: ${user.first_name}</p>
                          <p>Фамилия: ${user.surname}</p>
                       </div>
-                </div>                
+                </div>
+               <form class="complaint-form hiddenAdminCompletedComplaint-form" action="/hiddenAdminCompletedComplaint" data-complaint-id="${user.id}">
+                    <div class="delete-description" style="text-align: center; margin-bottom: 20px">
+                       <p>Вы точно хотите удалить пользователя #${user.id}?</p>
+                    </div>
+                    <button id="confirmButton" type="submit" class="btn btn-block btn-error">Да</button>
+              </form>                         
                 `
             aboutUser.classList.add("about-user")
             usersAccordion.append(aboutUser)
+            const deleteForm = document.querySelector(".complaint-form")
+            document.querySelector(".delete-button").addEventListener("click", (event) => {
+                event.stopPropagation()
+                deleteForm.classList.add("show")
+                overlay.classList.add("show")
+                overlay.addEventListener("click", () => {
+                    deleteForm.classList.remove("show")
+                    overlay.classList.remove("show")
+                })
+            })
+            deleteForm.addEventListener("submit",(event) => this.deleteUser(user.id, event))
         })
     }
 
-    async deleteUser(){
+    async deleteUser(event,userId){
+        event.preventDefault()
         try {
             const fetchDel =  await fetch('/deleteUser',{
                 method: 'POST',
@@ -57,15 +77,20 @@ class userInteraction{
                     'Content-Type': 'application/json',
                     'X-Requested-With': 'XMLHttpRequest'
                 },
-                body: JSON.stringify({userId: usrId})
+                body: JSON.stringify({userId: userId})
             })
             const data = await fetchDel.json();
+            if (data.success){
+                alert('success')
+            }else{
+                alert('Произошла ошибка при удалении пользователя!')
+            }
         }catch (error){
-            console.log(error)
+            alert('Произошла ошибка при удалении пользователя!')
         }
     }
 
-    async setUserRole() {
+    async setUserRole(UserId, roleId) {
         try {
             const fetchSetRole = await fetch('/setRole', {
                 method: 'POST',
@@ -73,7 +98,7 @@ class userInteraction{
                     'Content-Type': 'application/json',
                     'X-Requested-With': 'XMLHttpRequest'
                 },
-                body: JSON.stringify({userId: usrID, role: roleId})
+                body: JSON.stringify({userId: UserId, role: roleId})
             })
             const data = await  fetchSetRole.json()
             if (data.success){

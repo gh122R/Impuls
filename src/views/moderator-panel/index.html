@@ -32,6 +32,7 @@
                         <?php if($userInfo['role'] === 'admin' || 'moderator'): ?>
                         <a style="text-decoration: none" href="/admin-panel"><li>Админ-панель</li></a>
                         <?php endif ?>
+                        <a style="text-decoration: none" href="/"><li id="home-link">Домашняя страница</li></a>
                         <li class="exit-container">
                             <form method="post" action="/logout">
                                 <button><img src="/styles/icons/logout.svg" alt="exit-icon" class="exit-icon"></button>
@@ -71,7 +72,7 @@
                 <input type="checkbox" id="accordion-2" name="accordion-checkbox" hidden>
                 <label class="accordion-header" for="accordion-2">
                     <i class="icon icon-arrow-right mr-1"></i>
-                    <span class="card-header"><strong>Пользователи:</strong> <span id="user-count">0</span></span>
+                    <span class="card-header"><strong>Пользователи:</strong> <span id="user-count"></span></span>
                 </label>
                 <div class="accordion-body users-accordion">
                 </div>
