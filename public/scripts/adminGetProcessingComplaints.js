@@ -5,9 +5,6 @@ const pageItems = 3
 fetchAdminProcessingComplaints = () => {
     fetch('/getAllProcessingComplaints', {
         method: 'GET',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-        }
     })
         .then(response => response.json())
         .then(data =>{

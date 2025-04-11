@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types=1);
 namespace App\Controllers;
+
 use App\Models\Complaint;
 use App\Models\User;
 use App\View\View;
 
 class HomeController
 {
-    private $Complaint;
-    private $User;
+    private object $Complaint;
+    private object $User;
     public function __construct()
     {
         $this->Complaint = new Complaint();
         $this->User = new User();
     }
-    public function create():string
+    public function create(): string
     {
         $departments = $this->Complaint->getDepartments();
         $problemCategories = $this->Complaint->getProblemCategories();
@@ -24,7 +26,7 @@ class HomeController
             $departmentId = $_POST['departmentId'] ?? null;
             $problemCategoryId = $_POST['problemCategoryId'] ?? null;
             if (!empty($description) && !empty($departmentId) && !empty($problemCategoryId)) {
-                $result = $this->Complaint->createComplaint($description, $departmentId, $problemCategoryId);
+                $result = $this->Complaint->createComplaint($description, (int)$departmentId, (int)$problemCategoryId);
                 if ($result) {
                     echo json_encode(['success' => true]);
                 } else {
@@ -43,26 +45,26 @@ class HomeController
         return View::render('/home/index', $data);
     }
 
-    public function getComplaints()
+    public function getComplaints(): never
     {
         $userComplaints = $this->Complaint->getUserComplaints($_SESSION['user_id']) ?? null;
         echo json_encode(['complaints' => $userComplaints]);
         exit();
     }
 
-    public function getCompletedComplaints()
+    public function getCompletedComplaints(): never
     {
         $userCompletedComplaints = $this->Complaint->getUserCompletedComplaints($_SESSION['user_id']) ?? null;
         echo json_encode(['completedComplaints' => $userCompletedComplaints]);
         exit();
     }
 
-    public function deleteComplaint()
+    public function deleteComplaint(): never
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $data = json_decode(file_get_contents("php://input"),true);
-            $complaintId = $data['complaintId'];
+            $complaintId = (int)$data['complaintId'];
             $userId = $_SESSION['user_id'];
             if($complaintId)
             {
@@ -73,5 +75,6 @@ class HomeController
             echo json_encode(['success' => false, 'id' => $complaintId]);
             exit();
         }
+        exit();
     }
 }

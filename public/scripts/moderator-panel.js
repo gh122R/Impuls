@@ -6,10 +6,7 @@ class userInteraction{
 
      async getAllUsers () {
         fetch('/getAllUsers', {
-            method: 'GET',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
+            method: 'GET'
         })
             .then(response => response.json())
             .then(data => {
@@ -75,7 +72,6 @@ class userInteraction{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 body: JSON.stringify({userId: userId})
             })
@@ -96,7 +92,6 @@ class userInteraction{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 body: JSON.stringify({userId: UserId, role: roleId})
             })
@@ -127,10 +122,7 @@ class complaintInteraction{
     }
     async getAllComplaints(){
         fetch('/getAllComplaints', {
-            method: 'GET',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
+            method: 'GET'
         })
             .then(response => response.json())
             .then(data => {

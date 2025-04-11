@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Models\Complaint;
@@ -8,14 +9,16 @@ use App\View\View;
 
 class ModeratorController
 {
-    private $Complaint;
-    private $User;
+    private object $Complaint;
+    private object $User;
+
     public function __construct()
     {
         $this->Complaint = new Complaint();
         $this->User = new User();
     }
-    public function index()
+
+    public function index(): string
     {   $userInfo = $this->User->findUserById($_SESSION['user_id']);
         $data = [
             'pageTitle' => 'Управление',
@@ -24,21 +27,21 @@ class ModeratorController
         return View::render('/moderator-panel/index', $data);
     }
 
-    public function getAllComplaints()
+    public function getAllComplaints(): never
     {
         $complaints = $this->Complaint->getAllComplaints() ?? null;
         echo json_encode(['complaints' => $complaints]);
         exit();
     }
 
-    public function getAllUsers()
+    public function getAllUsers(): never
     {
         $users = $this->User->getAllUsers() ?? null;
         echo json_encode(['users' => $users]);
         exit();
     }
 
-    public function deleteUser()
+    public function deleteUser(): never
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
@@ -54,9 +57,10 @@ class ModeratorController
             echo json_encode(['success' => false, 'id' => $userId]);
             exit();
         }
+        exit();
     }
 
-    public function setRole()
+    public function setRole(): never
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
@@ -72,5 +76,6 @@ class ModeratorController
             echo json_encode(['success' => false]);
             exit();
         }
+        exit();
     }
 }

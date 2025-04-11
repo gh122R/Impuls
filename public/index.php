@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 session_start();
 require_once '../vendor/autoload.php';
 
@@ -36,4 +38,8 @@ $router->register('/', [App\Controllers\HomeController::class, 'create'], [AuthM
        ->register('/deleteUser', [App\Controllers\ModeratorController::class, 'deleteUser'],  [AuthMiddleware::class, [RoleMiddleware::class, 'moderator']])
        ->register('/setRole', [App\Controllers\ModeratorController::class, 'setRole'],  [AuthMiddleware::class, [RoleMiddleware::class, 'moderator']]);
 
-echo $router->resolve($_SERVER['REQUEST_URI']);
+try {
+    echo $router->resolve($_SERVER['REQUEST_URI']);
+} catch (Exception) {
+    exit();
+}

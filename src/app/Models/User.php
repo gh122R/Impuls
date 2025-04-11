@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
 namespace App\Models;
+
 use PDO;
 use PDOException;
 use Dotenv\Dotenv;
-use stdClass;
+
 class User
 {
     private Dotenv $dotenv;
@@ -25,7 +27,7 @@ class User
             $stmt = $this->db->prepare("SELECT * FROM users");
             $stmt->execute();
             return $stmt->fetchAll();
-        }catch (PDOException $e)
+        }catch (PDOException)
         {
             return [];
         }
@@ -41,13 +43,13 @@ class User
                                     WHERE users.email = :email");
             $stmt->execute(['email' => $email]);
             return $stmt->fetch();
-        }catch (PDOException $e)
+        }catch (PDOException)
         {
             return [];
         }
     }
 
-    public function findUserById(int $id)
+    public function findUserById(int $id): mixed
     {
         try
         {
@@ -65,13 +67,13 @@ class User
                                     WHERE users.id = :id");
             $stmt->execute(['id' => $id]);
             return $stmt->fetch();
-        }catch (PDOException $e)
+        }catch (PDOException)
         {
             return [];
         }
     }
 
-    public function createUser(string $username, string $firstName, string $surname, string $email, string $user_password)
+    public function createUser(string $username, string $firstName, string $surname, string $email, string $user_password): bool
     {
         $passwordHash = password_hash($user_password, PASSWORD_DEFAULT);
         try
@@ -90,7 +92,7 @@ class User
             ]);
             $this->db->commit();
             return true;
-        } catch (PDOException $e)
+        } catch (PDOException)
         {
             $this->db->rollBack();
             return false;
@@ -117,7 +119,7 @@ class User
             {
                 return false;
             }
-        }catch (PDOException $e)
+        }catch (PDOException)
         {
             $this->db->rollBack();
             return false;
@@ -136,7 +138,7 @@ class User
             ]);
             $this->db->commit();
             return true;
-        } catch (PDOException $e) {
+        } catch (PDOException) {
             $this->db->rollBack();
             return false;
         }
@@ -150,7 +152,7 @@ class User
                                     WHERE u.id = :user_id");
             $stmt->execute(['user_id' => $userId]);
             return $stmt->fetchColumn();
-        }catch (PDOException $e)
+        }catch (PDOException)
         {
             return '';
         }

@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Models\Complaint;
@@ -8,8 +9,8 @@ use App\View\View;
 
 class AdminController
 {
-    private $Complaint;
-    private $User;
+    private object $Complaint;
+    private object $User;
 
     public function __construct()
     {
@@ -17,7 +18,7 @@ class AdminController
         $this->User = new User();
     }
 
-    public function index()
+    public function index(): string
     {
         $userInfo = $this->User->findUserById($_SESSION['user_id']);
         $data = [
@@ -27,7 +28,7 @@ class AdminController
         return View::render('admin-panel/index', $data);
     }
 
-    public function getAllProcessingComplaints()
+    public function getAllProcessingComplaints(): never
     {
         $complaints = $this->Complaint->getAllProcessingComplaints();
         echo json_encode([
@@ -36,7 +37,7 @@ class AdminController
         exit();
     }
 
-    public function getComplaintsInWork()
+    public function getComplaintsInWork(): never
     {
         $complaints = $this->Complaint->getAdminComplaintsInWork($_SESSION['user_id']);
         echo json_encode([
@@ -45,7 +46,7 @@ class AdminController
         exit();
     }
 
-    public function getCompletedComplaints()
+    public function getCompletedComplaints(): never
     {
         $complaints = $this->Complaint->getAdminCompletedComplaints($_SESSION['user_id']);
         echo json_encode([
@@ -54,12 +55,12 @@ class AdminController
         exit();
     }
 
-    public function takeComplaint()
+    public function takeComplaint(): never
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $data = json_decode(file_get_contents("php://input"),true);
-            $complaintId = $data['complaintId'];
+            $complaintId = (int)$data['complaintId'];
             $adminId = $_SESSION['user_id'];
 
             if($complaintId && $adminId)
@@ -73,7 +74,7 @@ class AdminController
         exit();
     }
 
-    public function completeComplaint()
+    public function completeComplaint(): never
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
@@ -89,14 +90,15 @@ class AdminController
             echo json_encode(['success' => false]);
             exit();
         }
+        exit();
     }
 
-    public function hideCompletedComplaint()
+    public function hideCompletedComplaint(): never
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $data = json_decode(file_get_contents("php://input"),true);
-            $complaintId = $data['complaintId'];
+            $complaintId = (int)$data['complaintId'];
             if($complaintId)
             {
                 $result = $this->Complaint->adminRemoveCompletedComplaint($complaintId);
@@ -106,5 +108,6 @@ class AdminController
             echo json_encode(['success' => false]);
             exit();
         }
+        exit();
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
+declare(strict_types=1);
 namespace App\Models;
+
 use PDO;
 use PDOException;
 use Dotenv\Dotenv;
@@ -24,9 +26,8 @@ class Complaint
             $stmt = $this->db->prepare("SELECT * FROM departments");
             $stmt->execute();
             $this->db->commit();
-            $result = $stmt->fetchAll();
-            return $result;
-        }catch (PDOException $e)
+            return $stmt->fetchAll();
+        }catch (PDOException)
         {
             $this->db->rollBack();
             return [];
@@ -38,9 +39,8 @@ class Complaint
         try {
             $stmt = $this->db->prepare("SELECT * FROM problem_categories");
             $stmt->execute();
-            $result = $stmt->fetchAll();
-            return $result;
-        }catch (PDOException $e){
+             return $stmt->fetchAll();
+        }catch (PDOException){
             return [];
         }
     }
@@ -59,12 +59,12 @@ class Complaint
             ]);
             $this->db->commit();
             return true;
-        }catch (PDOException $e){
+        }catch (PDOException){
             $this->db->rollBack();
             return false;
         }
     }
-    public function getUserComplaints(int $userId) : array
+    public function getUserComplaints(int $userId): array
     {
         try {
             $stmt = $this->db->prepare("
@@ -91,13 +91,13 @@ class Complaint
                         ");
             $stmt->execute(["user_id" => $userId]);
             return $stmt->fetchAll();
-        }catch (PDOException $e)
+        }catch (PDOException)
         {
             return [];
         }
     }
 
-    public function getUserCompletedComplaints(int $userId) : array
+    public function getUserCompletedComplaints(int $userId): array
     {
         try {
             $stmt = $this->db->prepare("
@@ -125,13 +125,13 @@ class Complaint
                 "user_id" => $userId
             ]);
             return $stmt->fetchAll();
-        }catch (PDOException $e)
+        }catch (PDOException)
         {
             return [];
         }
     }
 
-    public function getAllComplaints()
+    public function getAllComplaints(): array
     {
         try {
             $stmt = $this->db->prepare("
@@ -157,13 +157,13 @@ class Complaint
         ");
             $stmt->execute();
              return $stmt->fetchAll();
-        }catch (PDOException $e)
+        }catch (PDOException)
         {
             return [];
         }
     }
 
-    public function getAllProcessingComplaints() : array
+    public function getAllProcessingComplaints(): array
     {
         try {
             $stmt = $this->db->prepare("
@@ -190,7 +190,7 @@ class Complaint
         ");
             $stmt->execute();
             return $stmt->fetchAll();
-        }catch (PDOException $e)
+        }catch (PDOException)
         {
             return [];
         }
@@ -219,14 +219,14 @@ class Complaint
             ]);
             $this->db->commit();
             return true;
-        }catch (PDOException $e)
+        }catch (PDOException)
         {
             $this->db->rollBack();
             return false;
         }
     }
 
-    public function getAdminComplaintsInWork(int $adminId) : array
+    public function getAdminComplaintsInWork(int $adminId): array
     {
         try
         {
@@ -255,13 +255,13 @@ class Complaint
                 'admin_id' => $adminId
                 ]);
             return $stmt->fetchAll();
-        }catch (PDOException $e)
+        }catch (PDOException)
         {
             return [];
         }
     }
 
-    public function getAdminCompletedComplaints(int $adminId) : array
+    public function getAdminCompletedComplaints(int $adminId): array
     {
         try {
             $stmt = $this->db->prepare("
@@ -290,13 +290,13 @@ class Complaint
                 'admin_id' => $adminId
             ]);
             return $stmt->fetchAll();
-        }catch(PDOException $e)
+        }catch(PDOException)
         {
             return [];
         }
     }
 
-    public function adminCompleteComplaint(int $complaintId, string | null $comment) : bool
+    public function adminCompleteComplaint(int $complaintId, string | null $comment): bool
     {
         try {
             $this->db->beginTransaction();
@@ -310,13 +310,13 @@ class Complaint
              ]);
              $this->db->commit();
              return true;
-        }catch (PDOException $e){
+        }catch (PDOException){
             $this->db->rollBack();
             return false;
         }
     }
 
-    public function adminRemoveCompletedComplaint(int $complaintId) : bool
+    public function adminRemoveCompletedComplaint(int $complaintId): bool
     {
         try {
             $this->db->beginTransaction();
@@ -328,13 +328,13 @@ class Complaint
             ]);
             $this->db->commit();
             return true;
-        }catch (PDOException $e){
+        }catch (PDOException){
             $this->db->rollBack();
             return false;
         }
     }
 
-    public function deleteComplaint(int $complaintId, int $userId) : bool
+    public function deleteComplaint(int $complaintId, int $userId): bool
     {
         try {
             $this->db->beginTransaction();
@@ -345,7 +345,7 @@ class Complaint
             ]);
             $this->db->commit();
             return true;
-        }catch (PDOException $e){
+        }catch (PDOException){
             $this->db->rollBack();
             return false;
         }

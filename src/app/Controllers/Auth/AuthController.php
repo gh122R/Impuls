@@ -1,6 +1,8 @@
 <?php
 
+declare(strict_types=1);
 namespace App\Controllers\Auth;
+
 use App\Models\User;
 use App\View\View;
 use Dotenv\Dotenv;
@@ -18,7 +20,7 @@ class AuthController
         $this->jwtKey = $_ENV['jwtKey'];
     }
 
-    private function setAuthCookie($user): void
+    private function setAuthCookie($user): never
     {
         $issuedAt = time();
         $expirationTime = $issuedAt + 3600*60*60*24*30;
@@ -36,7 +38,7 @@ class AuthController
         exit;
     }
 
-    public function login() : string
+    public function login(): string
     {
         $error = 'Неверные учётные данные!';
         $data = [
@@ -53,11 +55,11 @@ class AuthController
             if (!$user)
             {
                 return view::render('auth/login', ['error' => $error, 'pageTitle' => $data['pageTitle'], 'header' => $data['header']]);
-            }
-            if ($user and password_verify($password, $user['user_password']))
+            }else if(password_verify($password, $user['user_password']))
             {
                 $this->setAuthCookie($user);
-            }else{
+            }else
+            {
                 return view::render('auth/login', ['error' => $error, 'pageTitle' => $data['pageTitle'], 'header' => $data['header']]);
             }
         }
@@ -107,7 +109,7 @@ class AuthController
         return json_encode(['success' => true]);
     }*/
 
-    public function register() : string
+    public function register(): string
     {
         $error = 'Ошибка регистрации ;(';
         $data = [
@@ -133,7 +135,7 @@ class AuthController
         return view::render('auth/register', $data);
     }
 
-    public function logout():void
+    public function logout(): never
     {
         $_SESSION = [];
         session_destroy();
