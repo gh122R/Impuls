@@ -4,6 +4,18 @@ class userInteraction{
         this.init()
     }
 
+    toast(toastType, toastText) {
+        const toast = document.createElement("div");
+        toast.innerHTML = toastText;
+        toast.classList.add(toastType);
+        document.body.appendChild(toast);
+        setTimeout(() => toast.classList.add("show"), 10);
+        setTimeout(() => {
+            toast.classList.remove("show");
+            setTimeout(() => toast.remove(), 900);
+        }, 900);
+    }
+
      async getAllUsers () {
         fetch('/getAllUsers', {
             method: 'GET'
@@ -11,48 +23,75 @@ class userInteraction{
             .then(response => response.json())
             .then(data => {
                 if (data.users){
-                    this.updateAllUsers(data.users)
+                    this.getRoles().then(roles => {
+                        this.updateAllUsers(data.users, roles)
+                    })
                 }
             }).catch(error => {
             console.log(error)
         })
     }
 
-     updateAllUsers(users){
+    async getRoles() {
+        return fetch('/getRoles', {
+            method: 'GET'
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.roles)
+                return data.roles
+            }).catch(error => {
+                console.log(error)
+        })
+    }
+
+     updateAllUsers(users, roles){
         const usersAccordion = document.querySelector(".users-accordion")
+         usersAccordion.innerHTML = '';
          document.querySelector("#user-count").innerHTML = users.length
         users.length === 0 ? usersAccordion.innerHTML = 'Пользователей нет. Как это возможно 0_0?' :  users.forEach(user => {
-            let id = document.createElement("span").innerHTML = user.id
-            let fullName = document.createElement("span").innerHTML = user.first_name +  ` ` + user.surname
-            let username = document.createElement("span").innerHTML = user.username
-            let email = document.createElement("span").innerHTML = user.email
             let aboutUser = document.createElement("div")
             aboutUser.innerHTML = `
                 <div class="accordion">
-                      <input type="checkbox" id="accordion-${id}" name="accordion-checkbox" hidden>
-                      <label class="accordion-header" for="accordion-${id}">
+                      <input type="checkbox" id="accordion-${user.id}+4" name="accordion-checkbox" hidden>
+                      <label class="accordion-header" for="accordion-${user.id}+4">
                         <i class="icon icon-arrow-right mr-1"></i>
-                        ${fullName} <div class="userInteraction-container" ><button class="btn btn-standart">Изменить роль</button>
-                        <button class="btn btn-error delete-button">Удалить</button></div>
+                        ${user.first_name} ${user.surname} <span class="user-role" >${user.role}</span>
                       </label>
-                      <div class="accordion-body">
-                         <p>Логин: ${username}</p>
-                         <p>Почта: ${email}</p>
-                         <p>Имя: ${user.first_name}</p>
-                         <p>Фамилия: ${user.surname}</p>
+                      <div class="accordion-body user-body">
+                         <p>Логин: <span class="user-body__element">${user.username}</span></p>
+                         <p>Почта: <span class="user-body__element">${user.email}</span></p>
+                         <p>Имя: <span class="user-body__element">${user.first_name}</span></p>
+                         <p>Фамилия: <span class="user-body__element">${user.surname}</span></p>
+                         <div class="userInteraction-container" >
+                             <button class="btn btn-standart role-button" >Изменить роль</button>
+                            <button class="btn btn-error delete-button">Удалить</button>
+                        </div>
                       </div>
-                </div>
-               <form class="complaint-form hiddenAdminCompletedComplaint-form" action="/hiddenAdminCompletedComplaint" data-complaint-id="${user.id}">
-                    <div class="delete-description" style="text-align: center; margin-bottom: 20px">
-                       <p>Вы точно хотите удалить пользователя #${user.id}?</p>
-                    </div>
-                    <button id="confirmButton" type="submit" class="btn btn-block btn-error">Да</button>
-              </form>                         
+                        <form class="user-form hidden-delete-user-form"  data-user-id="${user.id}">
+                            <div class="delete-description" style="text-align: center; margin-bottom: 20px">
+                               <p>Вы точно хотите удалить пользователя #${user.id}?</p>
+                            </div>
+                            <button id="confirmButton" type="submit" class="btn btn-block btn-error">Да</button>
+                      </form>
+                      <form class="user-form hidden-user-role-form"  data-user-id="${user.id}">
+                            <div class="delete-description" style="text-align: center; margin-bottom: 20px">
+                               <p>Выберите роль пользователю #${user.id}</p>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-select form-in" id="role-id" name="roleId" required>
+                                ${roles.map(role => `<option class="role-option" value="${role.id}">${role.role}</option>`).join('')}
+                                </select>
+                             </div>
+                            <button id="confirmButton" type="submit" class="btn btn-block btn-error">Изменить роль</button>
+                      </form>
+                </div>                     
                 `
             aboutUser.classList.add("about-user")
             usersAccordion.append(aboutUser)
-            const deleteForm = document.querySelector(".complaint-form")
-            document.querySelector(".delete-button").addEventListener("click", (event) => {
+            const roleForm = aboutUser.querySelector(".hidden-user-role-form")
+            const deleteForm = aboutUser.querySelector(".hidden-delete-user-form")
+            aboutUser.querySelector(".delete-button").addEventListener("click", (event) => {
                 event.stopPropagation()
                 deleteForm.classList.add("show")
                 overlay.classList.add("show")
@@ -61,11 +100,26 @@ class userInteraction{
                     overlay.classList.remove("show")
                 })
             })
-            deleteForm.addEventListener("submit",(event) => this.deleteUser(user.id, event))
+            deleteForm.addEventListener("submit",(event) => {
+                this.deleteUser(event,user.id, deleteForm)
+            })
+            aboutUser.querySelector(".role-button").addEventListener("click", (event) => {
+                event.stopPropagation()
+                roleForm.classList.add("show")
+                overlay.classList.add("show")
+                overlay.addEventListener("click", () => {
+                    roleForm.classList.remove("show")
+                    overlay.classList.remove("show")
+                })
+                    roleForm.addEventListener("submit", (event) => {
+                        let roleId = roleForm.querySelector("#role-id").value;
+                        this.setUserRole(event, roleForm, user.id, roleId)
+                    })
+            })
         })
     }
 
-    async deleteUser(event,userId){
+    async deleteUser(event,userId, deleteForm){
         event.preventDefault()
         try {
             const fetchDel =  await fetch('/deleteUser',{
@@ -73,36 +127,46 @@ class userInteraction{
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({userId: userId})
+                body: JSON.stringify({userId: userId, password: 'none'})
             })
             const data = await fetchDel.json();
-            if (data.success){
-                alert('success')
+            if (data.success)
+            {
+                this.toast('toast-success', 'Вы удалили пользователя #' + userId)
+                overlay.classList.remove("show")
+                deleteForm.classList.remove("show")
+                document.querySelector('.users-accordion').innerHTML = ''
+                this.getAllUsers()
             }else{
-                alert('Произошла ошибка при удалении пользователя!')
+                this.toast('toast-error', 'Ошибка при удалении пользователя #' + userId)
             }
         }catch (error){
             alert('Произошла ошибка при удалении пользователя!')
         }
     }
 
-    async setUserRole(UserId, roleId) {
+    async setUserRole(event, roleForm,  userId, roleId) {
+        event.preventDefault()
         try {
             const fetchSetRole = await fetch('/setRole', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({userId: UserId, role: roleId})
+                body: JSON.stringify({userId: userId, role: roleId})
             })
-            const data = await  fetchSetRole.json()
+            const data = await fetchSetRole.json()
             if (data.success){
+                overlay.classList.remove("show")
+                roleForm.classList.remove("show")
+                document.querySelector('.users-accordion').innerHTML = ''
+                this.getAllUsers()
                 console.log('success!')
             }else{
                 console.log('error!')
             }
         }catch (error){
-            console.log(error)
+            alert( roleId)
         }
     }
 

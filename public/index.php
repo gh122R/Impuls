@@ -36,6 +36,7 @@ $router->register('/', [App\Controllers\HomeController::class, 'create'], [AuthM
        ->register('/hiddenAdminCompletedComplaint', [App\Controllers\AdminController::class, 'hideCompletedComplaint'],  [AuthMiddleware::class, [RoleMiddleware::class, 'admin || moderator']])
        ->register('/getAllUsers', [App\Controllers\ModeratorController::class, 'getAllUsers'],  [AuthMiddleware::class, [RoleMiddleware::class, 'moderator']])
        ->register('/deleteUser', [App\Controllers\ModeratorController::class, 'deleteUser'],  [AuthMiddleware::class, [RoleMiddleware::class, 'moderator']])
+       ->register('/getRoles', [App\Controllers\ModeratorController::class, 'getRoles'], [AuthMiddleware::class, [RoleMiddleware::class, 'moderator']])
        ->register('/setRole', [App\Controllers\ModeratorController::class, 'setRole'],  [AuthMiddleware::class, [RoleMiddleware::class, 'moderator']]);
 
 try {

@@ -21,10 +21,30 @@ class User
         );
     }
 
+    public function getRoles(): array
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM roles");
+            $stmt->execute();
+            return $stmt->fetchAll();
+        }catch (PDOException){
+            return [];
+        }
+    }
+
     public function getAllUsers(): array
     {
         try {
-            $stmt = $this->db->prepare("SELECT * FROM users");
+            $stmt = $this->db->prepare("SELECT
+                                    users.id, 
+                                    users.username, 
+                                    users.first_name,
+                                    users.surname,
+                                    users.email, 
+                                    users.role_id,
+                                    roles.role 
+                                    FROM users
+                                    LEFT JOIN roles ON users.role_id = roles.id");
             $stmt->execute();
             return $stmt->fetchAll();
         }catch (PDOException)

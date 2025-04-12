@@ -22,7 +22,8 @@ class ModeratorController
     {   $userInfo = $this->User->findUserById($_SESSION['user_id']);
         $data = [
             'pageTitle' => 'Управление',
-            'userInfo' => $userInfo
+            'userInfo' => $userInfo,
+
         ];
         return View::render('/moderator-panel/index', $data);
     }
@@ -31,6 +32,13 @@ class ModeratorController
     {
         $complaints = $this->Complaint->getAllComplaints() ?? null;
         echo json_encode(['complaints' => $complaints]);
+        exit();
+    }
+
+    public function getRoles(): never
+    {
+        $roles = $this->User->getRoles() ?? null;
+        echo json_encode(['roles' => $roles]);
         exit();
     }
 
@@ -65,8 +73,8 @@ class ModeratorController
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $data = json_decode(file_get_contents('php://input'), true);
-            $userId = $data['userId'];
-            $role = $data['role'];
+            $userId = (int)$data['userId'];
+            $role = (int)$data['role'];
             if($userId)
             {
                 $this->User->setRole($userId, $role);

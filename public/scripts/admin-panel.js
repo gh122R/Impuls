@@ -53,10 +53,7 @@ class adminInteraction {
 
     fetchAdminComplaintsInWork() {
         fetch('/getAdminComplaintsInWork', {
-            method: 'GET',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
+            method: 'GET'
         })
             .then(response => response.json())
             .then(data => {
@@ -71,9 +68,6 @@ class adminInteraction {
     fetchAdminCompletedComplaints() {
         fetch('/getAdminCompletedComplaints', {
             method: 'GET',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
         })
             .then(response => response.json())
             .then(data => {
@@ -175,7 +169,6 @@ class adminInteraction {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
             },
             body: JSON.stringify({complaintId: complaintId, comment: comment})
         })
@@ -290,7 +283,6 @@ class adminInteraction {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
             },
             body: JSON.stringify({ complaintId: complaintId })
         })
@@ -404,7 +396,6 @@ class adminInteraction {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 body: JSON.stringify({ complaintId })
             })

@@ -13,10 +13,7 @@ class userInteraction {
             const form = new FormData(this);
             fetch(this.action, {
                 method: 'POST',
-                body: form,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
+                body: form
             })
                 .then(response => response.json())
                 .then(data => {
@@ -54,10 +51,7 @@ class userInteraction {
             return
         }
         fetch('/getUserComplaints', {
-            method: 'GET',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
+            method: 'GET'
         })
             .then(response => response.json())
             .then(data => {
